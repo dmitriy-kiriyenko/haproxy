@@ -56,7 +56,18 @@ backend servers-https
 <% end -%>
 
 <% if node['haproxy']['enable_admin'] -%>
-listen admin <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']['admin']['port'] %>
+listen stats <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']['admin']['port'] %>
   mode http
-  stats uri /
+  balance
+  timeout client 5000
+  timeout connect 4000
+  timeout server 30000
+
+  stats uri <%= node["haproxy"]["admin"]["url"] %>
+
+  stats realm HAProxy\ Statistics 
+
+  stats auth <%= node["haproxy"]["admin"]["username"]:node["haproxy"]["admin"]["password"]   
+
+  stats admin if TRUE
 <% end -%>
