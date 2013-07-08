@@ -67,7 +67,7 @@ listen stats <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']
 
   stats realm HAProxy\ Statistics 
 
-  stats auth <%= node["haproxy"]["admin"]["username"]:node["haproxy"]["admin"]["password"]   
+  stats auth <%= node["haproxy"]["admin"]["username"]:node["haproxy"]["admin"]["password"] %> 
 
   stats admin if TRUE
 <% end -%>
